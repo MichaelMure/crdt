@@ -2,8 +2,9 @@ package crdt
 
 import (
 	"encoding/json"
+	"fmt"
 
-	"github.com/satori/go.uuid"
+	uuid "github.com/satori/go.uuid"
 )
 
 // GCounter represent a G-counter in CRDT, which is
@@ -36,7 +37,8 @@ func NewGCounterFromJSONBytes(in []byte) *GCounter {
 	err := json.Unmarshal(in, &in_struct)
 
 	if err != nil {
-		panic("failed to import GCounter from JSON")
+
+		panic(fmt.Sprintf("failed to import GCounter from JSON: %+v\n", string(in)))
 	}
 
 	return &GCounter{
