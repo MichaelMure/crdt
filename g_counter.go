@@ -3,6 +3,7 @@ package crdt
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"sync"
 
 	uuid "github.com/satori/go.uuid"
@@ -81,6 +82,10 @@ func (g *GCounter) Count() (total int) {
 
 	g.mtx.RUnlock()
 	return
+}
+
+func (g *GCounter) String() string {
+	return strconv.Itoa(g.Count())
 }
 
 // Merge combines the counter values across multiple replicas.
