@@ -14,17 +14,23 @@ func NewORSet() *ORSet {
 	}
 }
 
-func (o *ORSet) Add(value interface{}) {
+func (o *ORSet) Add(value interface{}) error {
+	id, err := uuid.NewV4()
+	if err != nil {
+		return err
+	}
+
 	if m, ok := o.addMap[value]; ok {
-		m[uuid.NewV4().String()] = struct{}{}
+		m[id.String()] = struct{}{}
 		o.addMap[value] = m
-		return
+		return nil
 	}
 
 	m := make(map[string]struct{})
 
-	m[uuid.NewV4().String()] = struct{}{}
+	m[id.String()] = struct{}{}
 	o.addMap[value] = m
+	return nil
 }
 
 func (o *ORSet) Remove(value interface{}) {

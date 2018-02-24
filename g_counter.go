@@ -18,8 +18,13 @@ type GCounter struct {
 // NewGCounter returns a *GCounter by pre-assigning a unique
 // identity to it.
 func NewGCounter() *GCounter {
+	ident, err := uuid.NewV4()
+	if err != nil {
+		return nil
+	}
+
 	return &GCounter{
-		ident:   uuid.NewV4().String(),
+		ident:   ident.String(),
 		counter: make(map[string]int),
 	}
 }
